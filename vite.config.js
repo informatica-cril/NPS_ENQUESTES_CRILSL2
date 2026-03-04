@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';  // ← AÑADIR
 
 export default defineConfig({
     plugins: [
@@ -9,7 +11,13 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
+        vue(),
     ],
+    resolve: {              // ← AÑADIR ESTO
+        alias: {
+            '@': resolve(__dirname, 'frontend/src'),
+        },
+    },
     build: {
         outDir: 'public/build',
         manifest: true,

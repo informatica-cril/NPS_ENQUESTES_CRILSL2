@@ -9,10 +9,13 @@ cd /www/wwwroot/enquestes.crilsl.org
 git pull origin main
 
 # 2. Instalar dependencias
+#    (asegúrate de que el root package.json ya contiene las dependencias de frontend
+#     y la versión correcta de tailwind 3.x)
 npm install
 composer install --no-dev
 
 # 3. Compilar Vue y Tailwind
+#     el build usa la configuración de Tailwind ubicada en la raíz (copiada desde frontend)
 npm run build
 
 # 4. Crear .env (solo primera vez)

@@ -54,6 +54,7 @@ class FisioterapeutaController extends Controller
             'centre_id' => 'nullable|exists:centres,id',
             'data_alta' => 'nullable|date',
             'email' => 'nullable|email|unique:users,email',
+            'username' => 'nullable|string|max:255|unique:users,username',
             'password' => 'nullable|string|min:8',
             'create_user' => 'boolean',
         ]);
@@ -62,11 +63,12 @@ class FisioterapeutaController extends Controller
             $userId = null;
 
             // Create user if requested
-            if (!empty($validated['create_user']) && !empty($validated['email'])) {
+            if (!empty($validated['create_user']) && (!empty($validated['email']) || !empty($validated['username']))) {
                 $user = User::create([
                     'name' => $validated['nom'] . ' ' . $validated['cognoms'],
-                    'email' => $validated['email'],
-                    'password' => Hash::make($validated['password'] ?? 'password123'),
+                    'username' => $validated['username'] ?? null,
+                    'email' => $validated['email'] ?? null,
+                    'password' => md5($validated['password'] ?? 'password123'), // Using MD5 for compatibility
                     'role' => 'fisioterapeuta',
                 ]);
                 $userId = $user->id;

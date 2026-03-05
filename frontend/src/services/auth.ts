@@ -2,13 +2,14 @@ import api from './api'
 import type { User } from '@/types'
 
 export interface LoginCredentials {
-  email: string
+  username: string
   password: string
 }
 
 export interface RegisterData {
   name: string
-  email: string
+  username?: string
+  email?: string
   password: string
   password_confirmation: string
 }
@@ -43,8 +44,8 @@ export const authService = {
     return data
   },
 
-  async forgotPassword(email: string): Promise<{ message: string }> {
-    const { data } = await api.post('/auth/forgot-password', { email })
+  async forgotPassword(username: string): Promise<{ message: string }> {
+    const { data } = await api.post('/auth/forgot-password', { username })
     return data
   },
 }

@@ -19,14 +19,23 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'nullable|string|max:255|unique:users,username',
+            'email' => 'nullable|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        // Ensure at least username or email is provided
+        if (empty($validated['username']) && empty($validated['email'])) {
+            throw ValidationException::withMessages([
+                'username' => ['Debes proporcionar un nombre de usuario o correo electrónico.'],
+            ]);
+        }
+
         $user = User::create([
             'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'username' => $validated['username'] ?? null,
+            'email' => $validated['email'] ?? null,
+            'password' => md5($validated['password']), // Using MD5 for compatibility
             'role' => 'viewer',
         ]);
 
@@ -44,21 +53,24 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required|string', // Changed from email to username
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        // Find user by username or email
+        $user = User::where('username', $request->username)
+            ->orWhere('email', $request->username)
+            ->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || md5($request->password) !== $user->password) {
             throw ValidationException::withMessages([
-                'email' => ['Les credencials proporcionades són incorrectes.'],
+                'username' => ['Credencials incorrectes.'],
             ]);
         }
 
         if (!$user->is_active) {
             throw ValidationException::withMessages([
-                'email' => ['Aquest compte està desactivat.'],
+                'username' => ['Aquest compte està desactivat.'],
             ]);
         }
 
@@ -101,18 +113,16 @@ class AuthController extends Controller
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,' . $user->id,
+            'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'nullable|email|max:255|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
-            'current_password' => 'required_with:password|current_password',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         if (isset($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
+            $validated['password'] = md5($validated['password']); // Using MD5 for compatibility
         }
 
-        unset($validated['current_password']);
-        
         $user->update($validated);
 
         return response()->json([
@@ -127,14 +137,25 @@ class AuthController extends Controller
     public function forgotPassword(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'username' => 'required|string|exists:users,username',
         ]);
 
+        // Find user by username or email
+        $user = User::where('username', $request->username)
+            ->orWhere('email', $request->username)
+            ->first();
+
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'username' => ['Usuari no trobat.'],
+            ]);
+        }
+
         // TODO: Implement password reset email logic
-        // Password::sendResetLink($request->only('email'));
+        // Password::sendResetLink($request->only('username'));
 
         return response()->json([
-            'message' => 'Si el correu existeix, rebràs un enllaç per restablir la contrasenya.',
+            'message' => 'Si l\'usuari existeix, rebràs un enllaç per restablir la contrasenya.',
         ]);
     }
 }

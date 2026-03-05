@@ -2,7 +2,8 @@
 export interface User {
   id: number
   name: string
-  email: string
+  username?: string
+  email?: string
   role: 'admin' | 'fisioterapeuta' | 'pacient' | 'viewer'
   phone?: string
   avatar?: string

@@ -11,8 +11,8 @@ const error = ref('')
 
 async function onSubmit() {
   try {
-    // CIP com a email, DNI com a password
-    await authStore.login({ email: cip.value, password: dni.value })
+    // CIP com a username, DNI com a password
+    await authStore.login({ username: cip.value, password: dni.value })
     if (authStore.user?.role !== 'pacient') {
       authStore.logout()
       error.value = 'Accés no autoritzat per a aquest portal'

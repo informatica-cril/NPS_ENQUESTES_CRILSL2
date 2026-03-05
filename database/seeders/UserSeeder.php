@@ -10,11 +10,12 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Admin user
+        // Admin user - login with username "admin" and password "CRIL2025"
         User::create([
             'name' => 'Administrador CRIL',
+            'username' => 'admin',
             'email' => 'admin@cril.es',
-            'password' => Hash::make('password123'),
+            'password' => md5('CRIL2025'), // Using MD5 for compatibility
             'role' => 'admin',
             'email_verified_at' => now(),
         ]);
@@ -23,7 +24,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Usuari Visor',
             'email' => 'viewer@cril.es',
-            'password' => Hash::make('password123'),
+            'password' => md5('password123'), // Using MD5 for compatibility
             'role' => 'viewer',
             'email_verified_at' => now(),
         ]);
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder
             User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
-                'password' => Hash::make('password123'),
+                'password' => md5('password123'), // Using MD5 for compatibility
                 'role' => 'fisioterapeuta',
                 'email_verified_at' => now(),
             ]);

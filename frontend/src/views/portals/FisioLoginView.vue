@@ -5,13 +5,13 @@ import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const email = ref('')
+const username = ref('')
 const password = ref('')
 const error = ref('')
 
 async function onSubmit() {
   try {
-    await authStore.login({ email: email.value, password: password.value })
+    await authStore.login({ username: username.value, password: password.value })
     if (authStore.user?.role !== 'fisioterapeuta') {
       authStore.logout()
       error.value = 'Accés no autoritzat per a aquest portal'
@@ -31,8 +31,8 @@ async function onSubmit() {
       <div v-if="error" class="bg-red-50 text-red-700 p-3 rounded mb-4 text-sm">{{ error }}</div>
       <div class="space-y-4">
         <div>
-          <label class="label">Correu electrònic</label>
-          <input v-model="email" type="email" class="input" placeholder="fisio@cril.es" />
+          <label class="label">Nom d'usuari</label>
+          <input v-model="username" type="text" class="input" placeholder="fisio@cril.es" />
         </div>
         <div>
           <label class="label">Contrasenya</label>

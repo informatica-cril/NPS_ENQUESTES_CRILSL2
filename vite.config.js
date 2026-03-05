@@ -20,7 +20,7 @@ export default defineConfig({
     },
     build: {
         outDir: 'public/build',
-        manifest: true,
+	manifest: 'manifest.json',
     },
     server: {
         watch: {

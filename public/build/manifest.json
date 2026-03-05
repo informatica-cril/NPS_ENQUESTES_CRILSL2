@@ -1,0 +1,404 @@
+{
+  "_BuildingOffice2Icon-BZ3zoWej.js": {
+    "file": "assets/BuildingOffice2Icon-BZ3zoWej.js",
+    "name": "BuildingOffice2Icon",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_HomeIcon-CMcALOY5.js": {
+    "file": "assets/HomeIcon-CMcALOY5.js",
+    "name": "HomeIcon",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_NpsDistributionChart.vue_vue_type_script_setup_true_lang-DblrNiF-.js": {
+    "file": "assets/NpsDistributionChart.vue_vue_type_script_setup_true_lang-DblrNiF-.js",
+    "name": "NpsDistributionChart.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "resources/js/app.js",
+      "_index-BquscPSN.js"
+    ]
+  },
+  "_NpsEvolutionChart.vue_vue_type_script_setup_true_lang-lTvCmtGf.js": {
+    "file": "assets/NpsEvolutionChart.vue_vue_type_script_setup_true_lang-lTvCmtGf.js",
+    "name": "NpsEvolutionChart.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "_index-BquscPSN.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js": {
+    "file": "assets/NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js",
+    "name": "NpsFiltersPanel.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "_nps-DdT0kaGs.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_PencilIcon-CF6hT13E.js": {
+    "file": "assets/PencilIcon-CF6hT13E.js",
+    "name": "PencilIcon",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_PlusIcon-nFRS0tMq.js": {
+    "file": "assets/PlusIcon-nFRS0tMq.js",
+    "name": "PlusIcon",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_TrashIcon-DpW3qOoy.js": {
+    "file": "assets/TrashIcon-DpW3qOoy.js",
+    "name": "TrashIcon",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_centres-BX8pJi-q.js": {
+    "file": "assets/centres-BX8pJi-q.js",
+    "name": "centres",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_enquestes-DUqV5lM-.js": {
+    "file": "assets/enquestes-DUqV5lM-.js",
+    "name": "enquestes",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_index-BquscPSN.js": {
+    "file": "assets/index-BquscPSN.js",
+    "name": "index",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_nps-DdT0kaGs.js": {
+    "file": "assets/nps-DdT0kaGs.js",
+    "name": "nps",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_vee-validate-zod-vFTJxHwA.js": {
+    "file": "assets/vee-validate-zod-vFTJxHwA.js",
+    "name": "vee-validate-zod",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/components/layout/AppLayout.vue": {
+    "file": "assets/AppLayout-CTwkIU6F.js",
+    "name": "AppLayout",
+    "src": "frontend/src/components/layout/AppLayout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_HomeIcon-CMcALOY5.js",
+      "_BuildingOffice2Icon-BZ3zoWej.js"
+    ]
+  },
+  "frontend/src/views/NotFoundView.vue": {
+    "file": "assets/NotFoundView-GemyPSjq.js",
+    "name": "NotFoundView",
+    "src": "frontend/src/views/NotFoundView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_HomeIcon-CMcALOY5.js",
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/auth/ForgotPasswordView.vue": {
+    "file": "assets/ForgotPasswordView-C8_qcgjM.js",
+    "name": "ForgotPasswordView",
+    "src": "frontend/src/views/auth/ForgotPasswordView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/auth/LoginView.vue": {
+    "file": "assets/LoginView-BbHgjCkV.js",
+    "name": "LoginView",
+    "src": "frontend/src/views/auth/LoginView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_vee-validate-zod-vFTJxHwA.js"
+    ]
+  },
+  "frontend/src/views/auth/ProfileView.vue": {
+    "file": "assets/ProfileView-DG6CAWXk.js",
+    "name": "ProfileView",
+    "src": "frontend/src/views/auth/ProfileView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/auth/RegisterView.vue": {
+    "file": "assets/RegisterView-DpA5dwY-.js",
+    "name": "RegisterView",
+    "src": "frontend/src/views/auth/RegisterView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_vee-validate-zod-vFTJxHwA.js"
+    ]
+  },
+  "frontend/src/views/centres/CentreDetailView.vue": {
+    "file": "assets/CentreDetailView-DR9sLMli.js",
+    "name": "CentreDetailView",
+    "src": "frontend/src/views/centres/CentreDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_centres-BX8pJi-q.js"
+    ]
+  },
+  "frontend/src/views/centres/CentresListView.vue": {
+    "file": "assets/CentresListView-DP1_sPZD.js",
+    "name": "CentresListView",
+    "src": "frontend/src/views/centres/CentresListView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_centres-BX8pJi-q.js",
+      "_BuildingOffice2Icon-BZ3zoWej.js",
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/dashboard/DashboardView.vue": {
+    "file": "assets/DashboardView-BaK0h8SM.js",
+    "name": "DashboardView",
+    "src": "frontend/src/views/dashboard/DashboardView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_nps-DdT0kaGs.js",
+      "_enquestes-DUqV5lM-.js",
+      "_NpsDistributionChart.vue_vue_type_script_setup_true_lang-DblrNiF-.js",
+      "resources/js/app.js",
+      "_index-BquscPSN.js"
+    ]
+  },
+  "frontend/src/views/enquestes/EnquestaDetailView.vue": {
+    "file": "assets/EnquestaDetailView-CKUYd9N6.js",
+    "name": "EnquestaDetailView",
+    "src": "frontend/src/views/enquestes/EnquestaDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_enquestes-DUqV5lM-.js",
+      "_PencilIcon-CF6hT13E.js"
+    ]
+  },
+  "frontend/src/views/enquestes/EnquestaFormView.vue": {
+    "file": "assets/EnquestaFormView-DHYvTj6K.js",
+    "name": "EnquestaFormView",
+    "src": "frontend/src/views/enquestes/EnquestaFormView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_enquestes-DUqV5lM-.js",
+      "_centres-BX8pJi-q.js",
+      "_PlusIcon-nFRS0tMq.js",
+      "_TrashIcon-DpW3qOoy.js"
+    ]
+  },
+  "frontend/src/views/enquestes/EnquestesListView.vue": {
+    "file": "assets/EnquestesListView-DLdgCphB.js",
+    "name": "EnquestesListView",
+    "src": "frontend/src/views/enquestes/EnquestesListView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_enquestes-DUqV5lM-.js",
+      "_PlusIcon-nFRS0tMq.js",
+      "_PencilIcon-CF6hT13E.js",
+      "_TrashIcon-DpW3qOoy.js"
+    ]
+  },
+  "frontend/src/views/fisioterapeutes/FisioterapeutaDetailView.vue": {
+    "file": "assets/FisioterapeutaDetailView-D4__PywT.js",
+    "name": "FisioterapeutaDetailView",
+    "src": "frontend/src/views/fisioterapeutes/FisioterapeutaDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/fisioterapeutes/FisioterapeutesListView.vue": {
+    "file": "assets/FisioterapeutesListView-0v20n12J.js",
+    "name": "FisioterapeutesListView",
+    "src": "frontend/src/views/fisioterapeutes/FisioterapeutesListView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/informes/InformeDetailView.vue": {
+    "file": "assets/InformeDetailView-C1S2N0ir.js",
+    "name": "InformeDetailView",
+    "src": "frontend/src/views/informes/InformeDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/informes/InformeFormView.vue": {
+    "file": "assets/InformeFormView-Beys_y5h.js",
+    "name": "InformeFormView",
+    "src": "frontend/src/views/informes/InformeFormView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_centres-BX8pJi-q.js"
+    ]
+  },
+  "frontend/src/views/informes/InformesListView.vue": {
+    "file": "assets/InformesListView-CMCgUSFb.js",
+    "name": "InformesListView",
+    "src": "frontend/src/views/informes/InformesListView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_PlusIcon-nFRS0tMq.js"
+    ]
+  },
+  "frontend/src/views/nps/NpsComentarisView.vue": {
+    "file": "assets/NpsComentarisView-BJuFp3tD.js",
+    "name": "NpsComentarisView",
+    "src": "frontend/src/views/nps/NpsComentarisView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_nps-DdT0kaGs.js",
+      "_NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js"
+    ]
+  },
+  "frontend/src/views/nps/NpsDashboardView.vue": {
+    "file": "assets/NpsDashboardView-CpgWhO9a.js",
+    "name": "NpsDashboardView",
+    "src": "frontend/src/views/nps/NpsDashboardView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_nps-DdT0kaGs.js",
+      "_NpsDistributionChart.vue_vue_type_script_setup_true_lang-DblrNiF-.js",
+      "_NpsEvolutionChart.vue_vue_type_script_setup_true_lang-lTvCmtGf.js",
+      "_NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js",
+      "resources/js/app.js",
+      "_index-BquscPSN.js"
+    ]
+  },
+  "frontend/src/views/nps/NpsEvolucioView.vue": {
+    "file": "assets/NpsEvolucioView-DfjpeJ_y.js",
+    "name": "NpsEvolucioView",
+    "src": "frontend/src/views/nps/NpsEvolucioView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_nps-DdT0kaGs.js",
+      "_NpsEvolutionChart.vue_vue_type_script_setup_true_lang-lTvCmtGf.js",
+      "_NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js",
+      "resources/js/app.js",
+      "_index-BquscPSN.js"
+    ]
+  },
+  "frontend/src/views/nps/NpsMapaView.vue": {
+    "file": "assets/NpsMapaView-DboO1vou.js",
+    "name": "NpsMapaView",
+    "src": "frontend/src/views/nps/NpsMapaView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_nps-DdT0kaGs.js",
+      "resources/js/app.js",
+      "_NpsFiltersPanel.vue_vue_type_script_setup_true_lang-CRwAAlpA.js"
+    ]
+  },
+  "frontend/src/views/pacients/PacientDetailView.vue": {
+    "file": "assets/PacientDetailView-KilrNXKb.js",
+    "name": "PacientDetailView",
+    "src": "frontend/src/views/pacients/PacientDetailView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/pacients/PacientsListView.vue": {
+    "file": "assets/PacientsListView-3pmGVe9E.js",
+    "name": "PacientsListView",
+    "src": "frontend/src/views/pacients/PacientsListView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/public/SurveyCompletedView.vue": {
+    "file": "assets/SurveyCompletedView-CAFVxJ6V.js",
+    "name": "SurveyCompletedView",
+    "src": "frontend/src/views/public/SurveyCompletedView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "frontend/src/views/public/SurveyView.vue": {
+    "file": "assets/SurveyView-CErG9kZD.js",
+    "name": "SurveyView",
+    "src": "frontend/src/views/public/SurveyView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DVvljGm4.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CNLv_UNg.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "frontend/src/views/auth/LoginView.vue",
+      "frontend/src/views/auth/RegisterView.vue",
+      "frontend/src/views/auth/ForgotPasswordView.vue",
+      "frontend/src/views/public/SurveyView.vue",
+      "frontend/src/views/public/SurveyCompletedView.vue",
+      "frontend/src/components/layout/AppLayout.vue",
+      "frontend/src/views/dashboard/DashboardView.vue",
+      "frontend/src/views/nps/NpsDashboardView.vue",
+      "frontend/src/views/nps/NpsEvolucioView.vue",
+      "frontend/src/views/nps/NpsMapaView.vue",
+      "frontend/src/views/nps/NpsComentarisView.vue",
+      "frontend/src/views/enquestes/EnquestesListView.vue",
+      "frontend/src/views/enquestes/EnquestaFormView.vue",
+      "frontend/src/views/enquestes/EnquestaDetailView.vue",
+      "frontend/src/views/enquestes/EnquestaFormView.vue",
+      "frontend/src/views/centres/CentresListView.vue",
+      "frontend/src/views/centres/CentreDetailView.vue",
+      "frontend/src/views/fisioterapeutes/FisioterapeutesListView.vue",
+      "frontend/src/views/fisioterapeutes/FisioterapeutaDetailView.vue",
+      "frontend/src/views/pacients/PacientsListView.vue",
+      "frontend/src/views/pacients/PacientDetailView.vue",
+      "frontend/src/views/informes/InformesListView.vue",
+      "frontend/src/views/informes/InformeFormView.vue",
+      "frontend/src/views/informes/InformeDetailView.vue",
+      "frontend/src/views/auth/ProfileView.vue",
+      "frontend/src/views/NotFoundView.vue"
+    ],
+    "css": [
+      "assets/app-1tXpooZW.css"
+    ]
+  }
+}

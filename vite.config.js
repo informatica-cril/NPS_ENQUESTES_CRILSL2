@@ -16,11 +16,14 @@ export default defineConfig({
     resolve: {              // ← AÑADIR ESTO
         alias: {
             '@': resolve(__dirname, 'frontend/src'),
+            'vue': resolve(__dirname, 'node_modules/vue'),  // ← AÑADIR ESTO
+
         },
     },
     build: {
         outDir: 'public/build',
 	manifest: 'manifest.json',
+
     },
     server: {
         watch: {

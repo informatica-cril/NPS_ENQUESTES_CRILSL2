@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@config "/www/wwwroot/enquestes.crilsl.org/tailwind.config.js";
 
 @layer base {
   body {

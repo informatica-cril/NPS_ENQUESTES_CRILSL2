@@ -28,7 +28,15 @@ api.interceptors.response.use(
   (error: AxiosError<ApiError>) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token')
-      window.location.href = '/login'
+      // Redirect to appropriate login page based on current path
+      const currentPath = window.location.pathname
+      if (currentPath.startsWith('/fisio')) {
+        window.location.href = '/fisio/login'
+      } else if (currentPath.startsWith('/pacient')) {
+        window.location.href = '/pacient/login'
+      } else {
+        window.location.href = '/admin/login'
+      }
     }
     return Promise.reject(error)
   }

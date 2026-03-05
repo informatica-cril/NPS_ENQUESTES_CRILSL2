@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'fisioterapeuta', 'paciente', 'viewer'])->default('viewer'); // <--- agregada
+            $table->enum('role', ['admin', 'fisioterapeuta', 'pacient', 'viewer'])->default('viewer'); // <--- agregada
             $table->string('phone')->nullable();        // <--- agregada
             $table->string('avatar')->nullable();       // <--- agregada
             $table->boolean('is_active')->default(true); // <--- agregada

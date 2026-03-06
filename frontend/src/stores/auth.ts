@@ -28,7 +28,12 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.setItem('auth_token', response.token)
       return response
     } catch (e: any) {
-      error.value = e.response?.data?.message || 'Error al iniciar sessió'
+      const errors = e.response?.data?.errors
+      if (errors) {
+        error.value = Object.values(errors).flat()[0] as string
+      } else {
+        error.value = e.response?.data?.message || 'Error al iniciar sessió'
+      }
       throw e
     } finally {
       loading.value = false
@@ -45,7 +50,12 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.setItem('auth_token', response.token)
       return response
     } catch (e: any) {
-      error.value = e.response?.data?.message || 'Error al registrar-se'
+      const errors = e.response?.data?.errors
+      if (errors) {
+        error.value = Object.values(errors).flat()[0] as string
+      } else {
+        error.value = e.response?.data?.message || 'Error al registrar-se'
+      }
       throw e
     } finally {
       loading.value = false

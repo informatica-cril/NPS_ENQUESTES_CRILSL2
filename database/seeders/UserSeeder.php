@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'name' => 'Administrador CRIL',
             'username' => 'admin',
             'email' => 'admin@cril.es',
-            'password' => md5('CRIL2025'), // Using MD5 for compatibility
+            'password' => Hash::make('CRIL2025'),
             'role' => 'admin',
             'email_verified_at' => now(),
         ]);
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Usuari Visor',
             'email' => 'viewer@cril.es',
-            'password' => md5('password123'), // Using MD5 for compatibility
+            'password' => Hash::make('password123'),
             'role' => 'viewer',
             'email_verified_at' => now(),
         ]);
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
-                'password' => md5('password123'), // Using MD5 for compatibility
+                'password' => Hash::make('password123'),
                 'role' => 'fisioterapeuta',
                 'email_verified_at' => now(),
             ]);

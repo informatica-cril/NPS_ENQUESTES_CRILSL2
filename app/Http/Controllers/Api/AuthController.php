@@ -35,7 +35,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'username' => $validated['username'] ?? null,
             'email' => $validated['email'] ?? null,
-            'password' => md5($validated['password']), // Using MD5 for compatibility
+            'password' => Hash::make($validated['password']),
             'role' => 'viewer',
         ]);
 
@@ -62,7 +62,29 @@ class AuthController extends Controller
             ->orWhere('email', $request->username)
             ->first();
 
-        if (!$user || md5($request->password) !== $user->password) {
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'username' => ['Usuari no trobat.'],
+            ]);
+        }
+
+        // Check password with multiple hash types for migration
+        $passwordValid = false;
+        if (Hash::check($request->password, $user->password)) {
+            $passwordValid = true;
+        } elseif (md5($request->password) === $user->password) {
+            $passwordValid = true;
+            // Convert MD5 to bcrypt
+            $user->password = Hash::make($request->password);
+            $user->save();
+        } elseif ($request->password === $user->password) {
+            $passwordValid = true;
+            // Convert plain text to bcrypt
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
+
+        if (!$passwordValid) {
             throw ValidationException::withMessages([
                 'username' => ['Credencials incorrectes.'],
             ]);
@@ -120,7 +142,7 @@ class AuthController extends Controller
         ]);
 
         if (isset($validated['password'])) {
-            $validated['password'] = md5($validated['password']); // Using MD5 for compatibility
+            $validated['password'] = Hash::make($validated['password']);
         }
 
         $user->update($validated);

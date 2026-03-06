@@ -91,55 +91,18 @@ class EnquestaSeeder extends Seeder
             'Massa car per al servei ofert',
         ];
 
-        // Generate 100 sample participations over last 6 months
-        for ($i = 0; $i < 100; $i++) {
+        // Generate sample participations (all pending)
+        for ($i = 0; $i < 20; $i++) {
             $pacient = $pacients->random();
             $fisio = $fisioterapeutes->random();
             $date = $faker->dateTimeBetween('-6 months', 'now');
 
-            // Weighted NPS score (more positive)
-            $weights = [0 => 2, 1 => 2, 2 => 3, 3 => 3, 4 => 4, 5 => 5, 6 => 8, 7 => 15, 8 => 20, 9 => 25, 10 => 13];
-            $puntuacio = $this->weightedRandom($weights);
-
-            $participacio = Participacio::create([
+            Participacio::create([
                 'enquesta_id' => $npsEnquesta->id,
                 'pacient_id' => $pacient->id,
                 'fisioterapeuta_id' => $fisio->id,
-                'estat' => 'completada',
+                'estat' => 'pendent',
                 'data_inici' => $date,
-                'data_completat' => $date,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            // NPS Response
-            Resposta::create([
-                'participacio_id' => $participacio->id,
-                'pregunta_id' => $npsQ->id,
-                'valor_numeric' => $puntuacio,
-            ]);
-
-            // Select comment based on score
-            $comentari = null;
-            if ($faker->boolean(40)) {
-                if ($puntuacio >= 9) {
-                    $comentari = $faker->randomElement($comentarisPositius);
-                } elseif ($puntuacio >= 7) {
-                    $comentari = $faker->randomElement($comentarisNeutres);
-                } else {
-                    $comentari = $faker->randomElement($comentarisNegatius);
-                }
-            }
-
-            // NPS Result
-            NpsResultat::create([
-                'enquesta_id' => $npsEnquesta->id,
-                'participacio_id' => $participacio->id,
-                'centre_id' => $fisio->centre_id,
-                'fisioterapeuta_id' => $fisio->id,
-                'puntuacio' => $puntuacio,
-                'comentari' => $comentari,
-                'data' => $date,
                 'created_at' => $date,
                 'updated_at' => $date,
             ]);

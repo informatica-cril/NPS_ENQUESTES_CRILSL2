@@ -14,7 +14,7 @@ class PacientSeeder extends Seeder
         $faker = Faker::create('ca_ES');
         $centres = Centre::all();
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $sexe = $faker->randomElement(['home', 'dona']);
             
             Pacient::create([

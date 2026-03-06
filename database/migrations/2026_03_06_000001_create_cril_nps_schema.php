@@ -102,15 +102,28 @@ return new class extends Migration
             
             $table->index('key');
         });
+
+        // 7. TAULA: personal_access_tokens (Sanctum)
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable');
+            $table->string('name');
+            $table->string('token', 80)->unique();
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('app_settings');
         Schema::dropIfExists('email_logs');
         Schema::dropIfExists('survey_responses');
         Schema::dropIfExists('patients');
         Schema::dropIfExists('physiotherapists');
-        Schema::dropIfExists('app_settings');
         Schema::dropIfExists('admins');
     }
 };

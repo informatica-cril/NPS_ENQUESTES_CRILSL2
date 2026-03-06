@@ -3,88 +3,112 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Admin;
+use App\Models\Physiotherapist;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     /**
-     * Register a new user
-     */
-    public function register(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'nullable|string|max:255|unique:users,username',
-            'email' => 'nullable|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        // Ensure at least username or email is provided
-        if (empty($validated['username']) && empty($validated['email'])) {
-            throw ValidationException::withMessages([
-                'username' => ['Debes proporcionar un nombre de usuario o correo electrónico.'],
-            ]);
-        }
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'username' => $validated['username'] ?? null,
-            'email' => $validated['email'] ?? null,
-            'password' => md5($validated['password']),
-            'role' => 'viewer',
-        ]);
-
-        $token = $user->createToken('auth-token')->plainTextToken;
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ], 201);
-    }
-
-    /**
-     * Login user and create token
+     * Login admin or fisioterapeuta
      */
     public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'username' => 'required|string', // Changed from email to username
-            'password' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        // Find user by username or email
-        $user = User::where('username', $request->username)
-            ->orWhere('email', $request->username)
+        $passwordHash = md5($request->password);
+
+        // Try Admin
+        $admin = Admin::where('username', $request->username)->first();
+        if ($admin && $admin->password === $passwordHash) {
+            $token = $admin->createToken('auth-token')->plainTextToken;
+            return response()->json([
+                'user' => array_merge($admin->toArray(), ['role' => 'admin']),
+                'token' => $token,
+            ]);
+        }
+
+        // Try Fisioterapeuta
+        $fisio = Physiotherapist::where('email', $request->username)
+            ->orWhere('full_name', 'like', '%' . $request->username . '%')
+            ->first();
+        
+        if ($fisio && $fisio->password === $passwordHash) {
+            if (!$fisio->is_active) {
+                throw ValidationException::withMessages([
+                    'username' => ['Aquest compte està desactivat.'],
+                ]);
+            }
+            
+            $token = $fisio->createToken('auth-token')->plainTextToken;
+            return response()->json([
+                'user' => array_merge($fisio->toArray(), ['role' => 'fisioterapeuta']),
+                'token' => $token,
+            ]);
+        }
+
+        throw ValidationException::withMessages([
+            'username' => ['Credencials incorrectes.'],
+        ]);
+    }
+
+    /**
+     * Login pacient by CIP + DNI
+     */
+    public function pacientLogin(Request $request): JsonResponse
+    {
+        $request->validate([
+            'cip' => 'required|string',
+            'dni' => 'required|string',
+        ]);
+
+        $patient = Patient::whereRaw('LOWER(cip) = ?', [strtolower($request->cip)])
+            ->whereRaw('LOWER(dni) = ?', [strtolower($request->dni)])
             ->first();
 
-        if (!$user) {
+        if (!$patient) {
             throw ValidationException::withMessages([
-                'username' => ['Usuari no trobat.'],
+                'cip' => ['Usuari no trobat.'],
             ]);
         }
 
-        if (md5($request->password) !== $user->password) {
-            throw ValidationException::withMessages([
-                'username' => ['Credencials incorrectes.'],
-            ]);
-        }
-
-        if (!$user->is_active) {
-            throw ValidationException::withMessages([
-                'username' => ['Aquest compte està desactivat.'],
-            ]);
-        }
-
-        $token = $user->createToken('auth-token')->plainTextToken;
+        $token = $patient->createToken('auth-token')->plainTextToken;
 
         return response()->json([
-            'user' => $user->load(['fisioterapeuta', 'pacient']),
+            'user' => array_merge($patient->toArray(), ['role' => 'pacient']),
             'token' => $token,
+        ]);
+    }
+
+    /**
+     * Get authenticated user
+     */
+    public function user(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        
+        // Determine role based on model type
+        if ($user instanceof Admin) {
+            $role = 'admin';
+        } elseif ($user instanceof Physiotherapist) {
+            $role = 'fisioterapeuta';
+        } elseif ($user instanceof Patient) {
+            $role = 'pacient';
+        } else {
+            $role = 'unknown';
+        }
+
+        $userData = $user->toArray();
+        $userData['role'] = $role;
+
+        return response()->json([
+            'user' => $userData,
         ]);
     }
 
@@ -101,16 +125,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Get authenticated user
-     */
-    public function user(Request $request): JsonResponse
-    {
-        return response()->json([
-            'user' => $request->user()->load(['fisioterapeuta', 'pacient']),
-        ]);
-    }
-
-    /**
      * Update user profile
      */
     public function updateProfile(Request $request): JsonResponse
@@ -118,9 +132,8 @@ class AuthController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
-            'email' => 'nullable|email|max:255|unique:users,email,' . $user->id,
+            'full_name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|max:255',
             'phone' => 'nullable|string|max:20',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
@@ -131,8 +144,22 @@ class AuthController extends Controller
 
         $user->update($validated);
 
+        // Determine role
+        if ($user instanceof Admin) {
+            $role = 'admin';
+        } elseif ($user instanceof Physiotherapist) {
+            $role = 'fisioterapeuta';
+        } elseif ($user instanceof Patient) {
+            $role = 'pacient';
+        } else {
+            $role = 'unknown';
+        }
+
+        $userData = $user->fresh()->toArray();
+        $userData['role'] = $role;
+
         return response()->json([
-            'user' => $user->fresh(),
+            'user' => $userData,
             'message' => 'Perfil actualitzat correctament',
         ]);
     }
@@ -143,70 +170,34 @@ class AuthController extends Controller
     public function forgotPassword(Request $request): JsonResponse
     {
         $request->validate([
-            'username' => 'required|string|exists:users,username',
+            'username' => 'required|string',
         ]);
 
-        // Find user by username or email
-        $user = User::where('username', $request->username)
-            ->orWhere('email', $request->username)
+        // Find user by username
+        $admin = Admin::where('username', $request->username)->first();
+        $fisio = Physiotherapist::where('email', $request->username)
+            ->orWhere('full_name', 'like', '%' . $request->username . '%')
             ->first();
 
-        if (!$user) {
+        if (!$admin && !$fisio) {
             throw ValidationException::withMessages([
                 'username' => ['Usuari no trobat.'],
             ]);
         }
 
         // TODO: Implement password reset email logic
-        // Password::sendResetLink($request->only('username'));
-
         return response()->json([
             'message' => 'Si l\'usuari existeix, rebràs un enllaç per restablir la contrasenya.',
         ]);
     }
 
-
     /**
-     * Login pacient by CIP + DNI
+     * Register (disabled for new schema)
      */
-    public function pacientLogin(Request $request): JsonResponse
+    public function register(Request $request): JsonResponse
     {
-        $request->validate([
-            'cip' => 'required|string',
-            'dni' => 'required|string',
-        ]);
-
-        $pacient = \App\Models\Pacient::whereRaw('LOWER(cip) = ?', [strtolower($request->cip)])
-            ->whereRaw('LOWER(dni) = ?', [strtolower($request->dni)])
-            ->first();
-
-        if (!$pacient) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
-                'cip' => ['Usuari no trobat.'],
-            ]);
-        }
-
-        // Find or create associated user for this pacient
-        $user = \App\Models\User::firstOrCreate(
-            ['username' => 'pacient_' . $pacient->id],
-            [
-                'name' => $pacient->nom . ' ' . $pacient->cognoms,
-                'email' => $pacient->email ?? 'pacient_' . $pacient->id . '@noreply.local',
-                'password' => md5(uniqid()),
-                'role' => 'pacient',
-            ]
-        );
-
-        // Link pacient to user if not linked
-        if (!$pacient->user_id) {
-            $pacient->update(['user_id' => $user->id]);
-        }
-
-        $token = $user->createToken('auth-token')->plainTextToken;
-
         return response()->json([
-            'user' => $user->load('pacient'),
-            'token' => $token,
-        ]);
+            'message' => 'Registre no disponible',
+        ], 403);
     }
 }

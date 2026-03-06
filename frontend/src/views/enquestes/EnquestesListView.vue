@@ -100,55 +100,62 @@ function getEstatBadgeClass(estat: EnquestaEstat): string {
     </div>
 
     <!-- List -->
-    <div v-else class="card">
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Títol</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tipus</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estat</th>
-              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Participacions</th>
-              <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Accions</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <tr v-for="enquesta in enquestesStore.enquestes" :key="enquesta.id">
-              <td class="px-4 py-3">
-                <RouterLink :to="`/enquestes/${enquesta.id}`" class="font-medium text-primary-600 hover:text-primary-800">
-                  {{ enquesta.titol }}
-                </RouterLink>
-                <p v-if="enquesta.descripcio" class="text-sm text-gray-500 truncate max-w-xs">
-                  {{ enquesta.descripcio }}
-                </p>
-              </td>
-              <td class="px-4 py-3 text-sm capitalize">{{ enquesta.tipus }}</td>
-              <td class="px-4 py-3">
-                <span :class="['px-2 py-1 text-xs rounded-full', getEstatBadgeClass(enquesta.estat)]">
-                  {{ enquesta.estat }}
-                </span>
-              </td>
-              <td class="px-4 py-3 text-sm text-right">{{ enquesta.total_participacions || 0 }}</td>
-              <td class="px-4 py-3 text-right">
-                <div class="flex justify-end gap-2">
-                  <RouterLink :to="`/enquestes/${enquesta.id}/edit`" class="text-gray-400 hover:text-primary-600">
-                    <PencilIcon class="h-5 w-5" />
-                  </RouterLink>
-                  <button @click="handleDuplicate(enquesta.id)" class="text-gray-400 hover:text-primary-600">
-                    <DocumentDuplicateIcon class="h-5 w-5" />
-                  </button>
-                  <button @click="handleDelete(enquesta.id)" class="text-gray-400 hover:text-red-600">
-                    <TrashIcon class="h-5 w-5" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div v-else>
+      <div v-if="!enquestesStore.enquestes.length" class="card text-center py-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <p class="text-gray-500 text-lg">No s'han trobat enquestes</p>
+        <p class="text-gray-400 text-sm mt-2">Crea la primera enquesta per comenzar</p>
       </div>
 
-      <div v-if="!enquestesStore.enquestes.length" class="text-center py-12 text-gray-500">
-        No s'han trobat enquestes
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-for="enquesta in enquestesStore.enquestes" :key="enquesta.id" class="card border-l-4 border-primary-500 hover:shadow-lg transition-all" style="border-left-color: var(--primary-color)">
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex-1">
+              <RouterLink :to="`/enquestes/${enquesta.id}`" class="font-semibold text-gray-900 text-lg hover:text-primary-600 line-clamp-2">
+                {{ enquesta.titol }}
+              </RouterLink>
+              <p v-if="enquesta.descripcio" class="text-sm text-gray-500 mt-1 line-clamp-2">
+                {{ enquesta.descripcio }}
+              </p>
+            </div>
+            <span :class="['px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ml-2', getEstatBadgeClass(enquesta.estat)]">
+              {{ enquesta.estat }}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 my-4 pt-4 border-t border-gray-100">
+            <div>
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Tipus</p>
+              <p class="font-medium text-gray-900 capitalize">{{ enquesta.tipus }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Participacions</p>
+              <p class="font-medium text-gray-900">{{ enquesta.total_participacions || 0 }}</p>
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-4 border-t border-gray-100">
+            <RouterLink :to="`/enquestes/${enquesta.id}/edit`" class="flex-1 btn-secondary text-xs flex items-center justify-center gap-1">
+              <PencilIcon class="h-4 w-4" />
+              Editar
+            </RouterLink>
+            <RouterLink :to="`/enquestes/${enquesta.id}`" class="flex-1 btn-primary text-xs flex items-center justify-center gap-1">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Ver
+            </RouterLink>
+            <button @click="handleDuplicate(enquesta.id)" class="px-3 btn-secondary text-xs hover:bg-blue-50">
+              <DocumentDuplicateIcon class="h-4 w-4" />
+            </button>
+            <button @click="handleDelete(enquesta.id)" class="px-3 btn-secondary text-xs hover:bg-red-50 hover:text-red-600">
+              <TrashIcon class="h-4 w-4" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

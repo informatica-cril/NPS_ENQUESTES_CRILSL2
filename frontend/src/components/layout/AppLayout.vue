@@ -37,9 +37,15 @@ const adminNav = [
 const fisioNav = [
   { name: 'Dashboard', href: '/fisio/dashboard', icon: HomeIcon },
   { name: 'Els meus Pacients', href: '/fisio/pacients', icon: UsersIcon },
+  { name: 'Enquestes', href: '/fisio/enquestes', icon: ClipboardDocumentListIcon },
+  { name: 'NPS', href: '/fisio/nps', icon: ChartBarIcon },
+  { name: 'Informes', href: '/fisio/informes', icon: DocumentTextIcon },
+  { name: 'Missatges', href: '/fisio/missatges', icon: ChatBubbleLeftRightIcon },
 ]
 const pacientNav = [
   { name: 'El meu Portal', href: '/pacient/dashboard', icon: HomeIcon },
+  { name: 'Les meves Enquestes', href: '/pacient/enquestes', icon: ClipboardDocumentListIcon },
+  { name: 'El meu NPS', href: '/pacient/nps', icon: ChartBarIcon },
 ]
 import { computed } from 'vue'
 const navigation = computed(() => {

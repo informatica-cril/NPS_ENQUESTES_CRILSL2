@@ -66,6 +66,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'nps', name: 'fisio-nps', component: () => import('@/views/nps/NpsDashboardView.vue') },
       { path: 'informes', name: 'fisio-informes', component: () => import('@/views/informes/InformesListView.vue') },
       { path: 'enquestes', name: 'fisio-enquestes', component: () => import('@/views/enquestes/EnquestesListView.vue') },
+      { path: 'missatges', name: 'fisio-missatges', component: () => import('@/views/missatges/MissatgesFisioView.vue') },
       { path: 'profile', name: 'fisio-profile', component: () => import('@/views/auth/ProfileView.vue') },
     ],
   },

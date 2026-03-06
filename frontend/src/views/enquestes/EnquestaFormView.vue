@@ -154,11 +154,20 @@ async function handleSubmit() {
             <input v-model="form.data_fi" type="date" class="input" />
           </div>
 
-          <div class="flex items-center gap-4">
-            <label class="flex items-center gap-2">
-              <input v-model="form.anonima" type="checkbox" class="rounded" />
-              <span class="text-sm">Enquesta anònima</span>
+          <div class="flex flex-col gap-3">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input v-model="form.anonima" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-primary-600 cursor-pointer" />
+              <span class="text-sm font-medium text-gray-700">Enquesta anònima</span>
             </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input v-model="form.requereix_autenticacio" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-primary-600 cursor-pointer" />
+              <span class="text-sm font-medium text-gray-700">Requereix autenticació</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="label">Temps estimat (minuts)</label>
+            <input v-model.number="form.temps_estimat_minuts" type="number" min="1" class="input" />
           </div>
         </div>
       </div>
@@ -177,11 +186,14 @@ async function handleSubmit() {
           <div
             v-for="(pregunta, index) in preguntes"
             :key="index"
-            class="p-4 border rounded-lg"
+            class="p-5 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-all"
           >
-            <div class="flex items-start justify-between mb-3">
-              <span class="text-sm font-medium text-gray-500">Pregunta {{ index + 1 }}</span>
-              <button type="button" @click="removePregunta(index)" class="text-red-500 hover:text-red-700">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 text-primary-600 font-semibold text-sm">{{ index + 1 }}</span>
+                <span class="font-medium text-gray-700">Pregunta</span>
+              </div>
+              <button type="button" @click="removePregunta(index)" class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded transition-colors">
                 <TrashIcon class="h-5 w-5" />
               </button>
             </div>
@@ -189,11 +201,11 @@ async function handleSubmit() {
             <div class="grid gap-4 md:grid-cols-2">
               <div class="md:col-span-2">
                 <label class="label">Text de la pregunta *</label>
-                <input v-model="pregunta.text_pregunta" type="text" class="input" required />
+                <textarea v-model="pregunta.text_pregunta" class="input" rows="2" placeholder="Escriu la pregunta..." required></textarea>
               </div>
 
               <div>
-                <label class="label">Tipus</label>
+                <label class="label">Tipus de resposta</label>
                 <select v-model="pregunta.tipus" class="input">
                   <option v-for="opt in tipusOptions" :key="opt.value" :value="opt.value">
                     {{ opt.label }}
@@ -201,17 +213,20 @@ async function handleSubmit() {
                 </select>
               </div>
 
-              <div class="flex items-center">
-                <label class="flex items-center gap-2">
-                  <input v-model="pregunta.obligatoria" type="checkbox" class="rounded" />
-                  <span class="text-sm">Obligatòria</span>
+              <div class="flex items-end">
+                <label class="flex items-center gap-3 cursor-pointer w-full">
+                  <input v-model="pregunta.obligatoria" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-primary-600 cursor-pointer" />
+                  <span class="text-sm font-medium text-gray-700">Obligatòria</span>
                 </label>
               </div>
             </div>
           </div>
 
-          <p v-if="!preguntes.length" class="text-center py-8 text-gray-500">
-            Afegeix preguntes a l'enquesta
+          <p v-if="!preguntes.length" class="text-center py-12 text-gray-400">
+            <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Afegeix preguntes a l'enquesta per començar
           </p>
         </div>
       </div>

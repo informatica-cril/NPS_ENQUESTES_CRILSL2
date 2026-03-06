@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Physiotherapist extends Model
 {
     use HasApiTokens;
-{
+
     protected $table = 'physiotherapists';
 
     protected $fillable = [

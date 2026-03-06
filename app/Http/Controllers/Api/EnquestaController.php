@@ -154,8 +154,10 @@ class EnquestaController extends Controller
 
         $enquesta->update($validated);
 
+        $enquesta->refresh();
+        $enquesta->load('preguntes');
         return response()->json([
-            'enquesta' => $enquesta->fresh()->load('preguntes'),
+            'enquesta' => $enquesta,
             'message' => 'Enquesta actualitzada correctament',
         ]);
     }

@@ -20,6 +20,11 @@ export interface AuthResponse {
 }
 
 export const authService = {
+  async pacientLogin(credentials: { cip: string; dni: string }): Promise<AuthResponse> {
+    const { data } = await api.post<AuthResponse>('/auth/pacient-login', credentials)
+    return data
+  },
+
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const { data } = await api.post<AuthResponse>('/auth/login', credentials)
     return data

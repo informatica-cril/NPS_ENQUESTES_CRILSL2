@@ -1,1 +1,0 @@
-import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as a,c as s,a as o}from"./app-B9l1q4ws.js";const r={},i={class:"p-6"};function n(c,e){return a(),s("div",i,[...e[0]||(e[0]=[o("h1",{class:"text-2xl font-bold"},"Dashboard Fisioterapeuta",-1),o("p",null,"Bienvenido al portal de fisioterapeuta.",-1)])])}const p=t(r,[["render",n]]);export{p as default};

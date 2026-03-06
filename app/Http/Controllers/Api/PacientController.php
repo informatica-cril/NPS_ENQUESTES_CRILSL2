@@ -137,6 +137,15 @@ class PacientController extends Controller
     /**
      * Get patient survey history
      */
+
+    public function senseEnquestes(): JsonResponse
+    {
+        $pacients = \App\Models\Pacient::whereDoesntHave('participacions')->with('centre:id,name')->orderBy('cognoms')->get()->map(function($p){
+            return ['id'=>$p->id,'nom_complet'=>$p->nom_complet??"{$p->nom} {$p->cognoms}",'email'=>$p->email,'telefon'=>$p->telefon,'centre'=>$p->centre?['name'=>$p->centre->name]:null,'data_alta'=>$p->data_alta,'actiu'=>$p->actiu];
+        });
+        return response()->json($pacients);
+    }
+
     public function historial(Pacient $pacient): JsonResponse
     {
         $participacions = $pacient->participacions()

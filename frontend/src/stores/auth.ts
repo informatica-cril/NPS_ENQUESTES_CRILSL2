@@ -4,20 +4,39 @@ import { authService, type LoginCredentials, type RegisterData } from '@/service
 import type { User } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
-  // State
   const user = ref<User | null>(null)
   const token = ref<string | null>(localStorage.getItem('auth_token'))
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  // Getters
   const isAuthenticated = computed(() => !!token.value && !!user.value)
   const isAdmin = computed(() => user.value?.role === 'admin')
   const isFisioterapeuta = computed(() => user.value?.role === 'fisioterapeuta')
   const isPacient = computed(() => user.value?.role === 'pacient')
   const userRole = computed(() => user.value?.role)
 
-  // Actions
+  async function pacientLogin(credentials: { cip: string; dni: string }) {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await authService.pacientLogin(credentials)
+      token.value = response.token
+      user.value = response.user
+      localStorage.setItem('auth_token', response.token)
+      return response
+    } catch (e: any) {
+      const errors = e.response?.data?.errors
+      if (errors) {
+        error.value = Object.values(errors).flat()[0] as string
+      } else {
+        error.value = e.response?.data?.message || 'CIP o DNI incorrectes'
+      }
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function login(credentials: LoginCredentials) {
     loading.value = true
     error.value = null
@@ -67,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await authService.logout()
     } catch (e) {
-      // Ignore errors on logout
+      // Ignore
     } finally {
       user.value = null
       token.value = null
@@ -78,14 +97,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchUser() {
     if (!token.value) return null
-    
     loading.value = true
     try {
       const response = await authService.getUser()
       user.value = response.user
       return response.user
     } catch (e) {
-      // Token might be invalid
       user.value = null
       token.value = null
       localStorage.removeItem('auth_token')
@@ -115,23 +132,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return {
-    // State
-    user,
-    token,
-    loading,
-    error,
-    // Getters
-    isAuthenticated,
-    isAdmin,
-    isFisioterapeuta,
-    isPacient,
-    userRole,
-    // Actions
-    login,
-    register,
-    logout,
-    fetchUser,
-    updateProfile,
-    clearError,
+    user, token, loading, error,
+    isAuthenticated, isAdmin, isFisioterapeuta, isPacient, userRole,
+    pacientLogin, login, register, logout, fetchUser, updateProfile, clearError,
   }
 })

@@ -22,7 +22,7 @@ const route = useRoute()
 const authStore = useAuthStore()
 const sidebarOpen = ref(false)
 
-const navigation = [
+const adminNav = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   { name: 'NPS Dashboard', href: '/nps', icon: ChartBarIcon },
   { name: 'Mapa NPS', href: '/nps/mapa', icon: MapIcon },
@@ -32,11 +32,28 @@ const navigation = [
   { name: 'Fisioterapeutes', href: '/fisioterapeutes', icon: UserGroupIcon },
   { name: 'Pacients', href: '/pacients', icon: UsersIcon },
   { name: 'Informes', href: '/informes', icon: DocumentTextIcon },
+  { name: 'Missatges', href: '/missatges', icon: ChatBubbleLeftRightIcon },
 ]
+const fisioNav = [
+  { name: 'Dashboard', href: '/fisio/dashboard', icon: HomeIcon },
+  { name: 'Els meus Pacients', href: '/fisio/pacients', icon: UsersIcon },
+]
+const pacientNav = [
+  { name: 'El meu Portal', href: '/pacient/dashboard', icon: HomeIcon },
+]
+import { computed } from 'vue'
+const navigation = computed(() => {
+  if (authStore.user?.role === 'fisioterapeuta') return fisioNav
+  if (authStore.user?.role === 'pacient') return pacientNav
+  return adminNav
+})
 
 async function handleLogout() {
+  const role = authStore.user?.role
   await authStore.logout()
-  window.location.href = '/login'
+  if (role === 'pacient') window.location.href = '/pacient/login'
+  else if (role === 'fisioterapeuta') window.location.href = '/fisio/login'
+  else window.location.href = '/admin/login'
 }
 
 function isActive(href: string): boolean {

@@ -15,7 +15,7 @@ async function onSubmit() {
   error.value = ''
   try {
     // CIP com a username, DNI com a password
-    await authStore.login({ username: cip.value, password: dni.value })
+    await authStore.pacientLogin({ cip: cip.value, dni: dni.value })
     if (authStore.user?.role !== 'pacient') {
       authStore.logout()
       error.value = 'Accés no autoritzat per a aquest portal'
@@ -35,7 +35,7 @@ async function onSubmit() {
 }
 </script>
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-2xl">
       <div class="text-center">
         <div class="mx-auto h-16 w-16 bg-primary-600 rounded-full flex items-center justify-center mb-4">

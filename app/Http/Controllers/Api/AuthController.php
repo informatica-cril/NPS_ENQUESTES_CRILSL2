@@ -164,4 +164,49 @@ class AuthController extends Controller
             'message' => 'Si l\'usuari existeix, rebràs un enllaç per restablir la contrasenya.',
         ]);
     }
+
+
+    /**
+     * Login pacient by CIP + DNI
+     */
+    public function pacientLogin(Request $request): JsonResponse
+    {
+        $request->validate([
+            'cip' => 'required|string',
+            'dni' => 'required|string',
+        ]);
+
+        $pacient = \App\Models\Pacient::whereRaw('LOWER(cip) = ?', [strtolower($request->cip)])
+            ->whereRaw('LOWER(dni) = ?', [strtolower($request->dni)])
+            ->first();
+
+        if (!$pacient) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'cip' => ['Usuari no trobat.'],
+            ]);
+        }
+
+        // Find or create associated user for this pacient
+        $user = \App\Models\User::firstOrCreate(
+            ['username' => 'pacient_' . $pacient->id],
+            [
+                'name' => $pacient->nom . ' ' . $pacient->cognoms,
+                'email' => $pacient->email ?? 'pacient_' . $pacient->id . '@noreply.local',
+                'password' => md5(uniqid()),
+                'role' => 'pacient',
+            ]
+        );
+
+        // Link pacient to user if not linked
+        if (!$pacient->user_id) {
+            $pacient->update(['user_id' => $user->id]);
+        }
+
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        return response()->json([
+            'user' => $user->load('pacient'),
+            'token' => $token,
+        ]);
+    }
 }

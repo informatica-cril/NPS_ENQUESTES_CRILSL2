@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@config "../../tailwind.config.js";
 @source '/www/wwwroot/enquestes.crilsl.org/frontend/src/**/*.vue';
 @source '/www/wwwroot/enquestes.crilsl.org/frontend/src/**/*.ts';
 

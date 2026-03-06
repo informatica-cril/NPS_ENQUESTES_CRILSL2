@@ -48,6 +48,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'informes', name: 'informes', component: () => import('@/views/informes/InformesListView.vue') },
       { path: 'informes/create', name: 'informes-create', component: () => import('@/views/informes/InformeFormView.vue') },
       { path: 'informes/:id', name: 'informes-show', component: () => import('@/views/informes/InformeDetailView.vue') },
+      { path: 'missatges', name: 'missatges', component: () => import('@/views/missatges/MissatgesAdminView.vue') },
       { path: 'profile', name: 'profile', component: () => import('@/views/auth/ProfileView.vue') },
     ],
   },

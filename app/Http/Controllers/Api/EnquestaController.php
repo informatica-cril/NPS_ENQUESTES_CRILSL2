@@ -150,9 +150,37 @@ class EnquestaController extends Controller
             'requereix_autenticacio' => 'boolean',
             'temps_estimat_minuts' => 'nullable|integer|min:1',
             'configuracio' => 'nullable|array',
+            'preguntes' => 'nullable|array',
+            'preguntes.*.text_pregunta' => 'required_if:preguntes,null|string',
+            'preguntes.*.tipus' => 'required_if:preguntes,null|string',
+            'preguntes.*.obligatoria' => 'boolean',
+            'preguntes.*.opcions' => 'nullable|array',
         ]);
 
+        $preguntes = $validated['preguntes'] ?? null;
+        unset($validated['preguntes']);
+
         $enquesta->update($validated);
+
+        // Update questions if provided
+        if ($preguntes !== null) {
+            // Delete existing questions
+            $enquesta->preguntes()->delete();
+
+            // Create new questions
+            foreach ($preguntes as $index => $preguntaData) {
+                if (isset($preguntaData['text_pregunta'])) {
+                    $enquesta->preguntes()->create([
+                        'text_pregunta' => $preguntaData['text_pregunta'],
+                        'tipus' => $preguntaData['tipus'] ?? 'text_curt',
+                        'ordre' => $index,
+                        'obligatoria' => $preguntaData['obligatoria'] ?? false,
+                        'opcions' => $preguntaData['opcions'] ?? null,
+                        'configuracio' => $preguntaData['configuracio'] ?? null,
+                    ]);
+                }
+            }
+        }
 
         $enquesta->refresh();
         $enquesta->load('preguntes');

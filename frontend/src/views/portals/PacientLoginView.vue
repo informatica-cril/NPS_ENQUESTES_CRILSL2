@@ -21,7 +21,7 @@ async function onSubmit() {
       error.value = 'Accés no autoritzat per a aquest portal'
       return
     }
-    router.push('/pacient/dashboard')
+    router.push('/pacient/enquestes')
   } catch (e: any) {
     const errors = e.response?.data?.errors
     if (errors) {

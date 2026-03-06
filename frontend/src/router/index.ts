@@ -60,11 +60,6 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', redirect: '/fisio/dashboard' },
       { path: 'dashboard', name: 'fisio-dashboard', component: () => import('@/views/fisio/FisioDashboardView.vue') },
-      { path: 'pacients', name: 'fisio-pacients', component: () => import('@/views/pacients/PacientsListView.vue') },
-      { path: 'pacients/:id', name: 'fisio-pacient-detail', component: () => import('@/views/pacients/PacientDetailView.vue') },
-      { path: 'nps', name: 'fisio-nps', component: () => import('@/views/nps/NpsDashboardView.vue') },
-      { path: 'informes', name: 'fisio-informes', component: () => import('@/views/informes/InformesListView.vue') },
-      { path: 'enquestes', name: 'fisio-enquestes', component: () => import('@/views/enquestes/EnquestesListView.vue') },
       { path: 'profile', name: 'fisio-profile', component: () => import('@/views/auth/ProfileView.vue') },
     ],
   },

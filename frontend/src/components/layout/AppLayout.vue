@@ -35,10 +35,6 @@ const adminNav = [
 ]
 const fisioNav = [
   { name: 'Dashboard', href: '/fisio/dashboard', icon: HomeIcon },
-  { name: 'Els meus Pacients', href: '/fisio/pacients', icon: UsersIcon },
-  { name: 'Enquestes', href: '/fisio/enquestes', icon: ClipboardDocumentListIcon },
-  { name: 'NPS', href: '/fisio/nps', icon: ChartBarIcon },
-  { name: 'Informes', href: '/fisio/informes', icon: DocumentTextIcon },
 ]
 const pacientNav = [
   { name: 'Les meves Enquestes', href: '/pacient/enquestes', icon: ClipboardDocumentListIcon },

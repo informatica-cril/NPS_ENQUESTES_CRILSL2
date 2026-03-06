@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             FisioterapeutaSeeder::class,
             PacientSeeder::class,
             EnquestaSeeder::class,
+            EnquestaMensualSeeder::class,
         ]);
     }
 }
